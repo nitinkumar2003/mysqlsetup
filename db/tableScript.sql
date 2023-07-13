@@ -1,0 +1,54 @@
+-- CREATE Gender TABLE AND INSERT VALUES
+CREATE TABLE IF NOT EXISTS tblGender (
+  genderId INT PRIMARY KEY NOT NULL,
+  gender VARCHAR(255) NOT NULL
+);
+
+INSERT IGNORE INTO tblGender (genderId, gender)
+VALUES (1, 'Female'), (2, 'Male'), (3, 'Other');
+
+-- CREATE Countries TABLE AND INSERT VALUES
+CREATE TABLE IF NOT EXISTS tblCountries (
+  countryId INT PRIMARY KEY NOT NULL,
+  country VARCHAR(255) NOT NULL
+);
+
+INSERT IGNORE INTO tblCountries (countryId, country)
+VALUES
+  (1, 'India'), (2, 'United States'), (3, 'Canada'), (4, 'United Kingdom'),
+  (5, 'Germany'), (6, 'France'), (7, 'Japan'), (8, 'China'), (9, 'Australia'), (10, 'Brazil');
+
+-- CREATE TABLE FOR USER STATUS
+CREATE TABLE IF NOT EXISTS tblStatus (
+  statusId INT PRIMARY KEY NOT NULL,
+  status VARCHAR(255) NOT NULL
+);
+
+INSERT IGNORE INTO tblStatus (statusId, status)
+VALUES (1, 'True'), (,0 'False');
+
+-- CREATE TABLE FOR REGISTRATION USER
+CREATE TABLE IF NOT EXISTS tblRegisterUser (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  userName VARCHAR(255) NOT NULL,
+  userEmail VARCHAR(255) NOT NULL UNIQUE,
+  userPassword VARCHAR(255) NOT NULL,
+  userId VARCHAR(255) NOT NULL,
+  isActive BOOLEAN DEFAULT 0,
+  genderId INT,
+  countryId INT,
+  statusId BOOLEAN DEFAULT 0,
+  time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  createdOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updatedOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (genderId) REFERENCES tblGender(genderId),
+  FOREIGN KEY (countryId) REFERENCES tblCountries(countryId),
+  FOREIGN KEY (statusId) REFERENCES tblStatus(statusId)
+);
+CREATE TABLE IF NOT EXISTS tblOtp(
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  userId VARCHAR(255) NOT NULL,
+  otp INT NOT NULL,
+  createdOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  expiresAt TIMESTAMP DEFAULT (CURRENT_TIMESTAMP + INTERVAL 10 MINUTE)
+);
